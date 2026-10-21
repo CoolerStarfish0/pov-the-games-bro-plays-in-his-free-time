@@ -134,7 +134,10 @@ body.edit-chaos .roll-final strong{animation:rgb-shift .65s linear infinite}
  const roll=document.querySelector('#creditRoll'), controls=document.querySelector('#rollControls');
  const flash=document.querySelector('#filmFlash'), entries=[...document.querySelectorAll('[data-reveal]')];
  const final=document.querySelector('#rollFinal'), soundToggle=document.querySelector('#soundToggle');
- let soundOn=true, revealObserver=null, revealTimers=[], beatSpinTimer=null, beatSpinInterval=null, spinToken=0;\n const screenWrap=document.querySelector("#screenSpinWrap");\n function triggerBeatSpin(){screenWrap.classList.remove("beat-spin");void screenWrap.offsetWidth;screenWrap.classList.add("beat-spin");const token=++spinToken;setTimeout(()=>{if(token===spinToken)screenWrap.classList.remove("beat-spin")},850)}\n function startBeatSpins(){clearTimeout(beatSpinTimer);clearInterval(beatSpinInterval);screenWrap.classList.remove("beat-spin");/* first drop at 2s, then every 2s */beatSpinTimer=setTimeout(()=>{triggerBeatSpin();beatSpinInterval=setInterval(triggerBeatSpin,2000)},2000)}
+ let soundOn=true, revealObserver=null, revealTimers=[], beatSpinTimer=null, beatSpinInterval=null, spinToken=0;
+ const screenWrap=document.querySelector("#screenSpinWrap");
+ function triggerBeatSpin(){screenWrap.classList.remove("beat-spin");void screenWrap.offsetWidth;screenWrap.classList.add("beat-spin");const token=++spinToken;setTimeout(()=>{if(token===spinToken)screenWrap.classList.remove("beat-spin")},850)}
+ function startBeatSpins(){clearTimeout(beatSpinTimer);clearInterval(beatSpinInterval);screenWrap.classList.remove("beat-spin");/* first drop at 2s, then every 2s */beatSpinTimer=setTimeout(()=>{triggerBeatSpin();beatSpinInterval=setInterval(triggerBeatSpin,2000)},2000)}
  document.querySelector('#year').textContent=new Date().getFullYear();
  audio.volume=.72;
  function hitFlash(){flash.classList.remove('hit');void flash.offsetWidth;flash.classList.add('hit')}
@@ -150,7 +153,7 @@ body.edit-chaos .roll-final strong{animation:rgb-shift .65s linear infinite}
    if(soundOn){try{audio.currentTime=0;await audio.play();soundToggle.textContent='♪ SOUND: ON'}catch(e){soundToggle.textContent='♪ AUDIO BLOCKED — TAP TO RETRY';}}
  }
  start.addEventListener('click',playEdit);
- document.querySelector('#replayEdit').addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'});playEdit()});
+ document.querySelector('#replayEdit').addEventListener('click',()=>{screenWrap.scrollTo({top:0,behavior:'smooth'});playEdit()});
  soundToggle.addEventListener('click',async()=>{
    soundOn=!soundOn;
    if(soundOn){try{audio.currentTime=0;await audio.play();soundToggle.textContent='♪ SOUND: ON'}catch(e){soundToggle.textContent='♪ AUDIO BLOCKED — TRY SOUND LINK'}}
