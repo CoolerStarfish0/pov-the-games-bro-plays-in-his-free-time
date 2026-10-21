@@ -60,6 +60,34 @@ body.roll-mode .film-stage{min-height:0}
 body.roll-mode .film-credit-roll{display:flex}
 @media(max-width:600px){.film-title{letter-spacing:-.03em}.film-intro{min-height:calc(100svh - 64px)}.film-stage{min-height:calc(100svh - 64px)}.film-credit-roll{padding:75px 18px}.roll-entry{margin-bottom:25px;padding:23px 8px 27px}.roll-heading{margin-bottom:50px}}
 @media(prefers-reduced-motion:reduce){.film-grain,.film-stage:before,.film-kicker,.film-title,.film-subtitle,.film-start,.film-audio-note{animation:none!important;opacity:1!important;transform:none!important}.roll-entry,.roll-final{transition:none!important;filter:none!important}}
+
+/* FULL-SEND EDIT: 360-degree spins, zoom punches, pulsing neon */
+body.credits-film.edit-chaos{background:#000;animation:edit-colors 3.2s steps(1,end) infinite}
+body.edit-chaos .film-stage{animation:stage-360 4s cubic-bezier(.62,0,.28,1) infinite;transform-origin:50% 48%;will-change:transform,filter}
+body.edit-chaos .film-stage:before{animation:light-rotate 1.8s linear infinite;opacity:.95;background:repeating-conic-gradient(from 0deg at 50% 45%,#ff386455 0deg 2deg,#50e8ff33 2deg 5deg,transparent 5deg 12deg)}
+body.edit-chaos .film-stage:after{height:100%;background:linear-gradient(0deg,#ff386433,transparent 24%,#50e8ff33 49%,transparent 72%,#c5ff4a22);mix-blend-mode:screen;animation:color-sweep 1.3s ease-in-out infinite alternate}
+body.edit-chaos .film-title{animation:title-punch .9s ease-in-out infinite;filter:drop-shadow(0 0 20px #ff3864) drop-shadow(0 0 45px #50e8ff)}
+body.edit-chaos .film-title span{animation:rgb-shift .7s linear infinite}
+body.edit-chaos .roll-entry.visible{animation:credit-spin-punch 1.5s cubic-bezier(.2,.9,.2,1) both;text-shadow:0 0 20px #50e8ff66}
+body.edit-chaos .roll-name{animation:name-glitch .6s ease-in-out infinite}
+body.edit-chaos .film-grain{opacity:.18;animation:grain-jitter .12s steps(2) infinite}
+body.edit-chaos .film-vignette{background:radial-gradient(ellipse at center,transparent 2%,#000e 100%);box-shadow:inset 0 0 190px #000}
+body.edit-chaos .film-intro:before{content:"";position:absolute;inset:-45%;pointer-events:none;background:repeating-conic-gradient(from 0deg at 50% 50%,#ffffff1a 0deg 1deg,transparent 1deg 9deg);animation:light-rotate 2.4s linear infinite;mix-blend-mode:screen}
+body.edit-chaos .film-intro:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at center,transparent 5%,#ff386422 40%,#50e8ff18 60%,transparent 75%);animation:pulse-ring .7s ease-in-out infinite alternate}
+body.edit-chaos .roll-separator{animation:separator-spin 2.4s linear infinite;color:#fff;text-shadow:0 0 18px #50e8ff}
+body.edit-chaos .roll-final.visible{animation:final-slam 1s cubic-bezier(.1,1.3,.4,1) both}
+body.edit-chaos .roll-final strong{animation:rgb-shift .65s linear infinite}
+@keyframes stage-360{0%{transform:perspective(900px) rotate(0deg) scale(1);filter:hue-rotate(0deg) contrast(1.1)}20%{transform:perspective(900px) rotate(0deg) scale(1.08);filter:hue-rotate(65deg) contrast(1.5)}52%{transform:perspective(900px) rotate(180deg) scale(.82);filter:hue-rotate(180deg) contrast(1.4)}76%{transform:perspective(900px) rotate(300deg) scale(1.12);filter:hue-rotate(280deg) contrast(1.5)}100%{transform:perspective(900px) rotate(360deg) scale(1);filter:hue-rotate(360deg) contrast(1.1)}}
+@keyframes title-punch{0%,100%{transform:scale(1) skew(0deg);text-shadow:5px 5px 0 #4e1530,0 0 25px #ff3864}25%{transform:scale(1.08,.94) skew(-3deg);text-shadow:-6px 4px 0 #50e8ff,6px -4px 0 #c5ff4a}50%{transform:scale(.94,1.08) skew(3deg);text-shadow:6px -5px 0 #ff3864,-6px 5px 0 #50e8ff}75%{transform:scale(1.05);text-shadow:0 0 40px #c5ff4a}}
+@keyframes credit-spin-punch{0%{opacity:0;transform:perspective(600px) rotateY(-180deg) rotateZ(-22deg) scale(.15);filter:blur(16px)}55%{opacity:1;transform:perspective(600px) rotateY(22deg) rotateZ(5deg) scale(1.16);filter:blur(0)}75%{transform:perspective(600px) rotateY(-8deg) rotateZ(-3deg) scale(.94)}100%{opacity:1;transform:perspective(600px) rotateY(0) rotateZ(0) scale(1)}}
+@keyframes rgb-shift{0%,100%{filter:hue-rotate(0deg) saturate(1.5);transform:scale(1)}50%{filter:hue-rotate(180deg) saturate(2.4);transform:scale(1.04)}}
+@keyframes name-glitch{0%,100%{transform:translateX(0) skew(0);text-shadow:2px 0 #50e8ff,-2px 0 #ff3864}50%{transform:translateX(2px) skew(-2deg);text-shadow:-3px 0 #50e8ff,3px 0 #c5ff4a}}
+@keyframes pulse-ring{from{transform:scale(.88);opacity:.35}to{transform:scale(1.08);opacity:.9}}
+@keyframes color-sweep{from{opacity:.2;filter:hue-rotate(0deg)}to{opacity:.7;filter:hue-rotate(180deg)}}
+@keyframes separator-spin{to{transform:rotate(360deg)}}
+@keyframes final-slam{0%{opacity:0;transform:scale(2.4) rotate(10deg);filter:blur(18px)}60%{opacity:1;transform:scale(.86) rotate(-4deg);filter:blur(0)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes edit-colors{0%,100%{background:#05050a}33%{background:#100317}66%{background:#04121a}}
+@media(prefers-reduced-motion:reduce){body.edit-chaos,body.edit-chaos .film-stage,body.edit-chaos .film-title,body.edit-chaos .film-title span,body.edit-chaos .roll-name,body.edit-chaos .film-grain,body.edit-chaos .film-stage:before,body.edit-chaos .film-stage:after,body.edit-chaos .roll-separator,body.edit-chaos .roll-final strong{animation:none!important}}
 </style>
 </head>
 <body class="credits-film">
@@ -108,7 +136,7 @@ body.roll-mode .film-credit-roll{display:flex}
    final.classList.remove('visible');revealTimers.push(setTimeout(()=>final.classList.add('visible'),3900));
  }
  async function playEdit(){
-   body.classList.add('roll-mode');roll.classList.add('playing');controls.classList.add('show');
+   body.classList.add('roll-mode','edit-chaos');roll.classList.add('playing');controls.classList.add('show');
    revealCredits();window.scrollTo({top:0,behavior:'smooth'});
    if(soundOn){try{audio.currentTime=0;await audio.play();soundToggle.textContent='♪ SOUND: ON'}catch(e){soundToggle.textContent='♪ AUDIO BLOCKED — TAP TO RETRY';}}
  }
