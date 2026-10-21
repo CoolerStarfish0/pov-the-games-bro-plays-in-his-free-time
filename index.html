@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#101018">
+  <meta name="description" content="A suspiciously chaotic collection of browser games for your free time.">
+  <title>IN HIS FREE TIME // CHAOS ARCADE</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="scanlines" aria-hidden="true"></div>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-icon">☠</span> IN HIS FREE TIME<span class="blink">_</span></a>
+    <nav><a class="active" href="index.html">ARCADE</a><a href="credits.html">CREDITS</a></nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span class="live-dot"></span> 100% QUESTIONABLE ENTERTAINMENT</div>
+      <h1>POV: BRO HAS<br><span class="glitch" data-text="FREE TIME">FREE TIME</span></h1>
+      <p class="hero-copy">Four games. Zero educational value. Your last two brain cells are about to fight for their lives.</p>
+      <button class="btn btn-hot" id="randomGame">🎲 DEPLOY RANDOM NONSENSE</button>
+      <div class="stats"><div><b>04</b><span>GAMES</span></div><div><b>∞</b><span>BAD DECISIONS</span></div><div><b>0</b><span>PRODUCTIVITY</span></div></div>
+    </section>
+
+    <section class="section-heading"><div><span class="eyebrow">SELECT YOUR PROBLEM</span><h2>THE ARCADE<span class="accent">.</span></h2></div><span class="small-label">BUILD 001 / DEFINITELY STABLE</span></section>
+    <section class="game-grid" id="gameGrid">
+      <article class="game-card card-ping" data-game="wifi"><div class="card-top"><span class="game-emoji">📶</span><span class="badge">REACTION</span></div><h3>THE WIFI FINAL BOSS</h3><p>9,999 ping. One packet. An internet connection held together by dreams.</p><button class="btn btn-card" data-launch="wifi">FIGHT THE ROUTER ↗</button></article>
+      <article class="game-card card-project" data-game="project"><div class="card-top"><span class="game-emoji">📄</span><span class="badge">SURVIVAL</span></div><h3>ESCAPE THE GROUP PROJECT</h3><p>Your teammates are online. They are just not doing anything. Classic.</p><button class="btn btn-card" data-launch="project">DO EVERYONE'S WORK ↗</button></article>
+      <article class="game-card card-teacher" data-game="teacher"><div class="card-top"><span class="game-emoji">🧑‍🏫</span><span class="badge">REFLEX</span></div><h3>NPC TEACHER SIMULATOR</h3><p>Survive the legendary “I'll wait” without losing your entire mind.</p><button class="btn btn-card" data-launch="teacher">DO NOT LAUGH ↗</button></article>
+      <article class="game-card card-chair" data-game="chair"><div class="card-top"><span class="game-emoji">🪑</span><span class="badge">TIMING</span></div><h3>THE LAST CHAIR</h3><p>The music stopped. The chair is moving. There can only be one.</p><button class="btn btn-card" data-launch="chair">SECURE THE SEAT ↗</button></article>
+    </section>
+    <section class="warning"><span>⚠️ SYSTEM NOTICE</span><p>This website has not been approved by the Department of Having a Normal Afternoon.</p></section>
+  </main>
+  <footer><span>IN HIS FREE TIME © <span id="year"></span></span><a href="credits.html">WHO MADE THIS DISASTER?</a><span>MADE WITH QUESTIONABLE INTENTIONS</span></footer>
+
+  <dialog id="gameDialog" class="game-dialog">
+    <div class="dialog-bar"><span id="dialogLabel">GAME.EXE</span><button id="closeDialog" class="close-btn" aria-label="Close game">✕</button></div>
+    <div id="gameContent" class="game-content"></div>
+  </dialog>
+  <script src="script.js"></script>
+</body>
+</html>
