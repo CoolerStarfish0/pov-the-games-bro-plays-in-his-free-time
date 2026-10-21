@@ -96,7 +96,7 @@ body.edit-chaos .roll-final strong{animation:rgb-shift .65s linear infinite}
 @keyframes separator-spin{to{transform:rotate(360deg)}}
 @keyframes final-slam{0%{opacity:0;transform:scale(2.4) rotate(10deg);filter:blur(18px)}60%{opacity:1;transform:scale(.86) rotate(-4deg);filter:blur(0)}100%{opacity:1;transform:scale(1) rotate(0)}}
 @keyframes edit-colors{0%,100%{background:#05050a}33%{background:#100317}66%{background:#04121a}}
-@media(prefers-reduced-motion:reduce){.screen-spin-wrap.beat-spin{animation:none!important}body.edit-chaos,body.edit-chaos .film-stage,body.edit-chaos .film-title,body.edit-chaos .film-title span,body.edit-chaos .roll-name,body.edit-chaos .film-grain,body.edit-chaos .film-stage:before,body.edit-chaos .film-stage:after,body.edit-chaos .roll-separator,body.edit-chaos .roll-final strong{animation:none!important}}
+/* Keep the requested edit effects active even when the device prefers reduced motion. */
 </style>
 </head>
 <body class="credits-film">
