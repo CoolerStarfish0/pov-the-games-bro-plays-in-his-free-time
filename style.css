@@ -82,3 +82,43 @@ footer{background:#08091055}
 #gameContent:has(.wifi-arena)>p{font-size:10px}
 @media(max-width:480px){.wifi-arena{min-height:360px!important}.wifi-stage{height:235px}.wifi-hud,.wifi-bottom-hud{font-size:7px;padding:10px 8px;letter-spacing:.5px}.router-boss{height:190px}.router-aura{width:170px;height:170px}#gameContent:has(.wifi-arena){padding:12px}}
 @media(prefers-reduced-motion:reduce){.arena-grid,.wifi-scan,.router-aura,.router-aura:before,.router-aura:after,.router-boss,.router-warning{animation:none!important}}
+
+
+/* Make the credits impossible to miss without stealing the arcade spotlight */
+.topbar nav a[href="credits.html"]{
+  color:var(--hot);
+  border:1px solid #ff386455;
+  background:linear-gradient(135deg,#ff38641c,#ff386406);
+  padding:10px 13px;
+  font-weight:700;
+  text-shadow:0 0 14px #ff386455;
+  box-shadow:inset 0 0 14px #ff38640b;
+  transition:color .18s,border-color .18s,background .18s,transform .18s,box-shadow .18s;
+}
+.topbar nav a[href="credits.html"]:hover{
+  color:#fff;
+  border-color:var(--hot);
+  background:#ff38642b;
+  transform:translateY(-2px);
+  box-shadow:0 0 18px #ff386433,inset 0 0 14px #ff386414;
+}
+footer a[href="credits.html"]{
+  color:var(--lime);
+  font-weight:700;
+  padding:9px 12px;
+  border:1px solid #c5ff4a55;
+  background:#c5ff4a0c;
+  box-shadow:0 0 18px #c5ff4a0c;
+  transition:background .18s,border-color .18s,box-shadow .18s,transform .18s;
+}
+footer a[href="credits.html"]:hover{
+  color:#101018;
+  background:var(--lime);
+  border-color:var(--lime);
+  box-shadow:0 0 24px #c5ff4a44;
+  transform:translateY(-2px);
+}
+@media(max-width:640px){
+  .topbar nav a[href="credits.html"]{padding:8px 10px}
+  footer a[href="credits.html"]{align-self:center}
+}
