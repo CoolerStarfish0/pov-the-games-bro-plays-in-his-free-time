@@ -61,6 +61,15 @@ body.roll-mode .film-credit-roll{display:flex}
 @media(max-width:600px){.film-title{letter-spacing:-.03em}.film-intro{min-height:calc(100svh - 64px)}.film-stage{min-height:calc(100svh - 64px)}.film-credit-roll{padding:75px 18px}.roll-entry{margin-bottom:25px;padding:23px 8px 27px}.roll-heading{margin-bottom:50px}}
 @media(prefers-reduced-motion:reduce){.film-grain,.film-stage:before,.film-kicker,.film-title,.film-subtitle,.film-start,.film-audio-note{animation:none!important;opacity:1!important;transform:none!important}.roll-entry,.roll-final{transition:none!important;filter:none!important}}
 
+/* WHOLE-VIEWPORT BEAT-DROP SPIN: the header, text, credits and controls all rotate together */
+html,body.credits-film{height:100%;overflow:hidden}
+.screen-spin-wrap{position:fixed;inset:0;overflow-y:auto;overflow-x:hidden;transform-origin:50% 50%;backface-visibility:hidden;will-change:transform}
+.screen-spin-wrap.beat-spin{animation:whole-screen-beat-spin .78s cubic-bezier(.18,.72,.2,1) both}
+@keyframes whole-screen-beat-spin{
+  0%{transform:rotate(0deg) scale(1);filter:brightness(1)}
+  14%{transform:rotate(0deg) scale(.94);filter:brightness(1.7)}
+  100%{transform:rotate(360deg) scale(1);filter:brightness(1)}
+}
 /* FULL-SEND EDIT: 360-degree spins, zoom punches, pulsing neon */
 body.credits-film.edit-chaos{background:#000;animation:edit-colors 3.2s steps(1,end) infinite}
 body.edit-chaos .film-stage{animation:stage-360 4s cubic-bezier(.62,0,.28,1) infinite;transform-origin:50% 48%;will-change:transform,filter}
@@ -87,10 +96,11 @@ body.edit-chaos .roll-final strong{animation:rgb-shift .65s linear infinite}
 @keyframes separator-spin{to{transform:rotate(360deg)}}
 @keyframes final-slam{0%{opacity:0;transform:scale(2.4) rotate(10deg);filter:blur(18px)}60%{opacity:1;transform:scale(.86) rotate(-4deg);filter:blur(0)}100%{opacity:1;transform:scale(1) rotate(0)}}
 @keyframes edit-colors{0%,100%{background:#05050a}33%{background:#100317}66%{background:#04121a}}
-@media(prefers-reduced-motion:reduce){body.edit-chaos,body.edit-chaos .film-stage,body.edit-chaos .film-title,body.edit-chaos .film-title span,body.edit-chaos .roll-name,body.edit-chaos .film-grain,body.edit-chaos .film-stage:before,body.edit-chaos .film-stage:after,body.edit-chaos .roll-separator,body.edit-chaos .roll-final strong{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.screen-spin-wrap.beat-spin{animation:none!important}body.edit-chaos,body.edit-chaos .film-stage,body.edit-chaos .film-title,body.edit-chaos .film-title span,body.edit-chaos .roll-name,body.edit-chaos .film-grain,body.edit-chaos .film-stage:before,body.edit-chaos .film-stage:after,body.edit-chaos .roll-separator,body.edit-chaos .roll-final strong{animation:none!important}}
 </style>
 </head>
 <body class="credits-film">
+<div class="screen-spin-wrap" id="screenSpinWrap">
 <div class="scanlines" aria-hidden="true"></div><div class="film-grain" aria-hidden="true"></div><div class="film-vignette" aria-hidden="true"></div><div class="film-flash" id="filmFlash" aria-hidden="true"></div>
 <header class="topbar"><a class="brand" href="index.html"><span class="brand-icon">☠</span> IN HIS FREE TIME<span class="blink">_</span></a><nav><a href="index.html">ARCADE</a><a class="active" href="credits.html">CREDITS</a></nav></header>
 <main class="film-stage">
@@ -115,17 +125,16 @@ body.edit-chaos .roll-final strong{animation:rgb-shift .65s linear infinite}
 </section>
 </main>
 <div class="roll-controls" id="rollControls"><button id="soundToggle" class="sound-state">♪ SOUND: ON</button><button id="replayEdit">↻ REPLAY EDIT</button><a href="index.html">← BACK TO ARCADE</a></div>
-<audio id="editSound" preload="auto" loop>
-<source src="https://www.myinstants.com/media/sounds/tiki-tiki-ultra-boosted.mp3" type="audio/mpeg">
-</audio>
 <div class="film-return"><span>IN HIS FREE TIME © <span id="year"></span></span> &nbsp; // &nbsp; <a href="index.html">RETURN TO THE NONSENSE</a></div>
+</div>
+<audio id="editSound" preload="auto" loop><source src="https://www.myinstants.com/media/sounds/tiki-tiki-ultra-boosted.mp3" type="audio/mpeg"></audio>
 <script>
 (() => {
  const body=document.body, start=document.querySelector('#startEdit'), audio=document.querySelector('#editSound');
  const roll=document.querySelector('#creditRoll'), controls=document.querySelector('#rollControls');
  const flash=document.querySelector('#filmFlash'), entries=[...document.querySelectorAll('[data-reveal]')];
  const final=document.querySelector('#rollFinal'), soundToggle=document.querySelector('#soundToggle');
- let soundOn=true, revealObserver=null, revealTimers=[];
+ let soundOn=true, revealObserver=null, revealTimers=[], beatSpinTimer=null, beatSpinInterval=null, spinToken=0;\n const screenWrap=document.querySelector("#screenSpinWrap");\n function triggerBeatSpin(){screenWrap.classList.remove("beat-spin");void screenWrap.offsetWidth;screenWrap.classList.add("beat-spin");const token=++spinToken;setTimeout(()=>{if(token===spinToken)screenWrap.classList.remove("beat-spin")},850)}\n function startBeatSpins(){clearTimeout(beatSpinTimer);clearInterval(beatSpinInterval);screenWrap.classList.remove("beat-spin");/* first drop at 2s, then every 2s */beatSpinTimer=setTimeout(()=>{triggerBeatSpin();beatSpinInterval=setInterval(triggerBeatSpin,2000)},2000)}
  document.querySelector('#year').textContent=new Date().getFullYear();
  audio.volume=.72;
  function hitFlash(){flash.classList.remove('hit');void flash.offsetWidth;flash.classList.add('hit')}
@@ -136,8 +145,8 @@ body.edit-chaos .roll-final strong{animation:rgb-shift .65s linear infinite}
    final.classList.remove('visible');revealTimers.push(setTimeout(()=>final.classList.add('visible'),3900));
  }
  async function playEdit(){
-   body.classList.add('roll-mode','edit-chaos');roll.classList.add('playing');controls.classList.add('show');
-   revealCredits();window.scrollTo({top:0,behavior:'smooth'});
+   body.classList.add('roll-mode','edit-chaos');roll.classList.add('playing');controls.classList.add('show');startBeatSpins();
+   revealCredits();screenWrap.scrollTo({top:0,behavior:'smooth'});
    if(soundOn){try{audio.currentTime=0;await audio.play();soundToggle.textContent='♪ SOUND: ON'}catch(e){soundToggle.textContent='♪ AUDIO BLOCKED — TAP TO RETRY';}}
  }
  start.addEventListener('click',playEdit);
